@@ -14,4 +14,6 @@ target/
 *.project
 *.settings
 
-workshops/RxJava/.gradle/
+.gradle/
+local.properties
+build/
