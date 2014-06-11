@@ -5,9 +5,10 @@ import com.novoda.workshop.rx.observer.IntegerPrinterObserver;
 import java.util.Arrays;
 import java.util.List;
 
+import com.novoda.workshop.rx.observer.StringPrinterObserver;
 import rx.Observable;
 
-import static com.novoda.workshop.rx.Functions.isEven;
+import static com.novoda.workshop.rx.Functions.*;
 
 public class RxJavaBasics {
 
@@ -15,12 +16,12 @@ public class RxJavaBasics {
 
     /*
         TODO:
-        - Multiply all elements by 2
-        - Get only even element and multiply them by 2
-        - Prepend the string "Integer : " in front of every element
-        - Repeat 3 time every element
-        - Repeat 3 times every even element only say once odd ones
-        - Fail if an element is not even.
+
+
+
+
+
+
         - If an element is not even restart and double the entire sequence
      */
 
@@ -29,6 +30,37 @@ public class RxJavaBasics {
         System.out.println("Observable.from(INTEGERS).filter(isEven()).subscribe(new IntegerPrinterObserver());");
         Observable.from(INTEGERS)
                 .filter(isEven())
+                .subscribe(new IntegerPrinterObserver());
+
+        //- Multiply all elements by 2
+        Observable.from(INTEGERS)
+                .map(multiplyByTwo())
+                .subscribe(new IntegerPrinterObserver());
+
+        //- Get only even element and multiply them by 2
+        Observable.from(INTEGERS)
+                .filter(isEven())
+                .map(multiplyByTwo())
+                .subscribe(new IntegerPrinterObserver());
+
+        //- Prepend the string "Integer : " in front of every element
+        Observable.from(INTEGERS)
+                .map(prepandString())
+                .subscribe(new StringPrinterObserver());
+
+        //- Repeat 3 time every element
+        Observable.from(INTEGERS)
+                .flatMap(repeatThreeTime())
+                .subscribe(new IntegerPrinterObserver());
+
+        //- Repeat 3 times every even element only say once odd ones
+        Observable.from(INTEGERS)
+                .flatMap(repeat())
+                .subscribe(new IntegerPrinterObserver());
+
+        //- Fail if an element is not even.
+        Observable.from(INTEGERS)
+                .map(failIfNotEven())
                 .subscribe(new IntegerPrinterObserver());
 
     }
