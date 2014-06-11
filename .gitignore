@@ -13,3 +13,5 @@ target/
 *.classpath
 *.project
 *.settings
+
+workshops/RxJava/.gradle/
