@@ -91,4 +91,13 @@ public class Functions {
     private static boolean isEven(Integer integer) {
         return (integer % 2) == 0;
     }
+
+    public static Func1<String, String> addIndex() {
+        return new Func1<String, String>() {
+            @Override
+            public String call(String s) {
+                return null;
+            }
+        };
+    }
 }

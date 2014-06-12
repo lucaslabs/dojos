@@ -1,16 +1,15 @@
 package com.novoda.workshop.rx;
 
 import com.novoda.workshop.rx.observer.IntegerPrinterObserver;
+import rx.Observable;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import rx.Observable;
-
 public class RxJavaInfinite {
 
-    private static final List<String> SENTENCES = Arrays.asList("This is the first sentence","I want those to be enumerated", "How would you ask?", "That is yours to find out!");
+    private static final List<String> SENTENCES = Arrays.asList("This is the first sentence", "I want those to be enumerated", "How would you ask?", "That is yours to find out!");
 
     private static final Iterable<Integer> INFINITE_ITERABLE = new Iterable<Integer>() {
         @Override
@@ -29,9 +28,18 @@ public class RxJavaInfinite {
 
     public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("\nObservable.from(INFINITE_ITERABLE).subscribe(new IntegerPrinterObserver());");
-        Observable.from(INFINITE_ITERABLE).subscribe(new IntegerPrinterObserver());
+//        System.out.println("\nObservable.from(INFINITE_ITERABLE).subscribe(new IntegerPrinterObserver());");
+//        Observable.from(INFINITE_ITERABLE).subscribe(new IntegerPrinterObserver());
+
+        System.out.println("\nGet one element from the infinite observable");
+        Observable.from(INFINITE_ITERABLE)
+                .first()
+                .subscribe(new IntegerPrinterObserver());
+
+        System.out.println("\nGet the 20 first integers");
+        Observable.from(INFINITE_ITERABLE)
+                .take(20)
+                .subscribe(new IntegerPrinterObserver());
 
     }
-
 }
