@@ -45,7 +45,7 @@ public class RxJavaInfinite {
         Observable.zip(sentences, infiniteNumbers, InfiniteFunctions.prependIndexInFrontOfStrings()).subscribe(new StringPrinterObserver());
 
         System.out.println("\n\nConcatenate the sequences into one line.");
-        Observable.from(SENTENCES).scan(InfiniteFunctions.concatenateStrings()).subscribe(new StringPrinterObserver());
+        Observable.from(SENTENCES).scan(InfiniteFunctions.concatenateStrings()).last().subscribe(new StringPrinterObserver());
     }
 
 }
