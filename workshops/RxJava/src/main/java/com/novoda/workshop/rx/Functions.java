@@ -13,7 +13,19 @@ public class Functions {
         };
     }
 
+    public static Func1<Integer, Integer> times(final int factor) {
+        return new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer) {
+                return times(integer, factor);
+            }
+        };
+    }
+
     private static boolean isEven(Integer integer) {
         return (integer % 2) == 0;
+    }
+    private static Integer times(Integer integer, int factor) {
+        return integer * factor;
     }
 }

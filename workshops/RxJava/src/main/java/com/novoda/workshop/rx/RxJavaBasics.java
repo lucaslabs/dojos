@@ -3,11 +3,11 @@ package com.novoda.workshop.rx;
 import com.novoda.workshop.rx.observer.IntegerPrinterObserver;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
-
-import static com.novoda.workshop.rx.Functions.isEven;
+import rx.functions.Func1;
 
 public class RxJavaBasics {
 
@@ -27,8 +27,28 @@ public class RxJavaBasics {
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("Observable.from(INTEGERS).filter(isEven()).subscribe(new IntegerPrinterObserver());");
-        Observable.from(INTEGERS)
-                .filter(isEven())
+        final Observable<Integer> NUMBERS = Observable.from(INTEGERS);
+        NUMBERS
+//                .filter(isEven())
+                .flatMap(new Func1<Integer, Observable<Integer>>() {
+                    @Override
+                    public Observable<Integer> call(final Integer integer) {
+                        if (integer % 2 == 0) {
+                            return Observable.from(Collections.nCopies(3, integer));
+                        }
+                        return Observable.just(integer);
+                    }
+                })
+                .map(new Func1<Integer, Integer>() {
+                    @Override
+                    public Integer call(final Integer integer) {
+                        if (integer % 2 == 0) {
+                            return integer;
+                        }
+                        throw new IllegalArgumentException("not even");
+                    }
+                })
+                .onExceptionResumeNext(NUMBERS.filter(Functions.isEven()))
                 .subscribe(new IntegerPrinterObserver());
 
     }
