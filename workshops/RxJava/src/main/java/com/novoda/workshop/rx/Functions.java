@@ -48,6 +48,16 @@ public class Functions {
         };
     }
 
+
+    public static Func2<String, Integer, String> attachIndexToSentance() {
+        return new Func2<String, Integer, String>() {
+            @Override
+            public String call(String s, Integer integer) {
+                return integer + ": " + s;
+            }
+        };
+    }
+
     public static Func1<Integer, Observable<Integer>> threeTimes() {
         return new Func1<Integer, Observable<Integer>>() {
             @Override
