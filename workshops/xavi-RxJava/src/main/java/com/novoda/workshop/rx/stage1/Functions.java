@@ -1,4 +1,4 @@
-package com.novoda.workshop.rx;
+package com.novoda.workshop.rx.stage1;
 
 import rx.Observable;
 import rx.exceptions.OnErrorThrowable;

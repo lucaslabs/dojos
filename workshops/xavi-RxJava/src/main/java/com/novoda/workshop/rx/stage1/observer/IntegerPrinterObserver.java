@@ -1,8 +1,8 @@
-package com.novoda.workshop.rx.observer;
+package com.novoda.workshop.rx.stage1.observer;
 
 import rx.Observer;
 
-public class StringPrinterObserver implements Observer<String> {
+public class IntegerPrinterObserver implements Observer<Integer> {
     @Override
     public void onCompleted() {
         System.out.println("onCompleted");
@@ -14,7 +14,7 @@ public class StringPrinterObserver implements Observer<String> {
     }
 
     @Override
-    public void onNext(String string) {
-        System.out.println("onNext : " + string);
+    public void onNext(Integer integer) {
+        System.out.println("onNext : " + integer);
     }
 }

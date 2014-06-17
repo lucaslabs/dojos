@@ -1,17 +1,14 @@
-package com.novoda.workshop.rx;
+package com.novoda.workshop.rx.stage1;
 
-import com.novoda.workshop.rx.observer.IntegerPrinterObserver;
+import com.novoda.workshop.rx.stage1.observer.IntegerPrinterObserver;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.novoda.workshop.rx.observer.StringPrinterObserver;
+import com.novoda.workshop.rx.stage1.observer.StringPrinterObserver;
 import rx.Observable;
-import rx.exceptions.OnErrorThrowable;
-import rx.functions.Func1;
 
-import static com.novoda.workshop.rx.Functions.*;
-import static rx.functions.Functions.not;
+import static com.novoda.workshop.rx.stage1.Functions.*;
 
 public class RxJavaBasics {
 
