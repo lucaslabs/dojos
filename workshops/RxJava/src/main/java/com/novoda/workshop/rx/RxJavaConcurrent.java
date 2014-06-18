@@ -5,7 +5,9 @@ import com.novoda.workshop.rx.observer.ThreadAwareStringPrinterObserver;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import rx.Observable;
 import rx.Scheduler;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.novoda.workshop.rx.Functions.say;
@@ -33,32 +35,41 @@ public class RxJavaConcurrent {
 
     public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("\nsay(\"one\").subscribe(new ThreadAwareStringPrinterObserver());");
-        System.out.println("say(\"two\").subscribe(new ThreadAwareStringPrinterObserver());");
-        say("one").subscribe(new ThreadAwareStringPrinterObserver());
-        say("two").subscribe(new ThreadAwareStringPrinterObserver());
+//        System.out.println("\nsay(\"one\").subscribe(new ThreadAwareStringPrinterObserver());");
+//        System.out.println("say(\"two\").subscribe(new ThreadAwareStringPrinterObserver());");
+//        say("one").subscribe(new ThreadAwareStringPrinterObserver());
+//        say("two").subscribe(new ThreadAwareStringPrinterObserver());
 
-        System.out.println("\nsay(\"one\").subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
-        System.out.println("say(\"two\").subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
-        say("one")
-                .subscribeOn(Schedulers.computation())
+//        System.out.println("\nsay(\"one\").subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
+//        System.out.println("say(\"two\").subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
+//        say("one")
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
+//                .subscribe(new ThreadAwareStringPrinterObserver());
+//        say("two")
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
+//                .subscribe(new ThreadAwareStringPrinterObserver());
+
+
+        say("one").flatMap(new Func1<String, Observable<String>>() {
+            @Override
+            public Observable<String> call(String s) {
+                return say(s + "two");
+            }
+        }).subscribeOn(Schedulers.computation())
                 .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
                 .subscribe(new ThreadAwareStringPrinterObserver());
-        say("two")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
-                .subscribe(new ThreadAwareStringPrinterObserver());
-
-        sleep(5000);
-
-        System.out.println("\nsay(\"one\").flatMap(sayPreviousAnd(\"two\")).subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
-        say("one")
-                .flatMap(sayPreviousAnd("two"))
-                .subscribeOn(Schedulers.computation())
-                .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
-                .subscribe(new ThreadAwareStringPrinterObserver());
-
         sleep(10000);
+//
+//        System.out.println("\nsay(\"one\").flatMap(sayPreviousAnd(\"two\")).subscribeOn(Schedulers.computation()).observeOn(FAKE_CURRENT_THREAD_SCHEDULER).subscribe(new ThreadAwareStringPrinterObserver());");
+//        say("one")
+//                .flatMap(sayPreviousAnd("two"))
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(FAKE_CURRENT_THREAD_SCHEDULER)
+//                .subscribe(new ThreadAwareStringPrinterObserver());
+//
+//        sleep(10000);
     }
 
 }
